@@ -4,6 +4,7 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+const compression = require('compression');
 const logger = require('./config/logger');
 const app = express();
 
@@ -15,9 +16,16 @@ const { UserRouter } = require('./src/routers/userRouter');
 // app.set('view engine', 'pug/ejs etc.');
 
 app.use(express.json()); // json으로 이루어진 Request Body 처리
-app.use(express.urlencoded({ extended: true })); // qs 모듈 관련
+app.use(express.urlencoded({ extended: false })); // qs 모듈 관련
 app.use(cors()); // cors 설정 -> 필요시 검색 후 사용
-// app.use(express.static(path.join(__dirname, 'public')));  -> 정적파일 관련
+app.use(compression()); // 페이지 압축 -> 용량 감소
+
+// 처음 들어가면 보이는 사이트 설정
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/views/index.html');
+});
+
+// app.use(express.static(path.join(__dirname, 'public')));  -> 정적파일 허용
 
 // ** 위에서 Require 후 여기에 새로 생성한 Router 추가할 것! **
 UserRouter(app);
