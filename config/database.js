@@ -10,6 +10,7 @@ require('dotenv').config();
  * mysql vs mysql2 : promise (비동기 처리)
  * node, express에서는 promise 주로 사용 -> mysql2
  * 환경 변수 or secret을 통해서 구분
+ * 만약 환경변수 또는 secret을 사용하지 않을 경우 gitIgnore 추가 필수!
  */
 const mysql = require('mysql2/promise');
 
