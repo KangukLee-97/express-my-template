@@ -31,19 +31,8 @@ app.get('/', (req, res) => {
 UserRouter(app);
 
 // 개발 환경, 배포 환경에 따라 port 번호 분리
-let port;
+let port = process.env.PORT || 3000;   // 환경 변수에 저장되어 있는 PORT가 없으면 3000번 포트 사용
 
-switch (process.env.NODE_ENV) {
-  case 'development':
-    port = 3001;
-    break;
-  case 'production':
-    port = 3002;
-    break;
-  default:
-    port = 3000;
-    break;
-}
 
 app.listen(port, () => {
   logger.info(`Server listening on port ${port}`);
